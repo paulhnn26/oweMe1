@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Bill extends Model
+{
+    protected $table ='bill';
+    protected $fillable =[
+        'message',
+        'amount',
+        'debtorID',
+        'userID',
+        'payed',
+        'id'
+    ];
+    
+    use HasFactory;
+}

@@ -16,15 +16,17 @@
         </thead>
         <tbody>
             @foreach ($data as $bill)
+            
                 <tr>
                     <td>{{ $bill->amount }}</td>
-                    <td>{{ $bill->debtorID }}</td>
+                    <td>{{ $bill->deptorID }}</td>
                     <td>{{ $bill->payed }}</td>
                     <td>{{ $bill->userID }}</td>
                     <td>{{ $bill->message }}</td>
                     <td>
                         <form action="{{ route('bills.destroy', $bill->id) }}" method="Post">
                             <a class="btn btn-primary" href="{{ route('bills.edit', $bill->id) }}">Edit</a>
+                            
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger">Delete</button>

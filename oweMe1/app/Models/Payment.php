@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bill extends Model
+class Payment extends Model
 {
-    protected $table ='bill';
-    protected $fillable =[
-        'message',
-        'amount',
-        'deptorID',
-        'userID',
-        'payed',
-        'id'
-    ];
-    
     use HasFactory;
+    protected $table = 'payments';
+    protected $primaryKey = 'id';
+    protected $fillable =[
+        'amount',
+        'debtorID',
+        'message'
+    ];
 }

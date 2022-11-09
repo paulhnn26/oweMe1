@@ -14,8 +14,8 @@ class BillController extends Controller
      */
     public function index()
     {
-        $data = Bill::all();
-        return view ('bills.index') -> with('data', $data);
+        $data = Bill::orderBy('id','desc')->paginate(5);
+        return view ('bills.index', compact('data'));
     }
 
     /**
@@ -73,17 +73,14 @@ class BillController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\data $ data
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bill $data, $id)
+    public function update(Request $request, Bill $data)
     {
         $request->validate([
             'amount' => 'required',
             'message' => 'required',
-            'payed' => 'required',
-            'userID' => 'required',
-            'debtorID' => 'required',
             
             
         ]);

@@ -5,8 +5,9 @@
             Back</a>
     </div>
 </div>
+{{ $data->id }}
 <div class="container mt-2">
-<form action="{{ url('bills/update' .$data->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ url('update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="row">
@@ -23,7 +24,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Company Email:</strong>
-                <input type="text" name="email" class="form-control" placeholder="Company Email"
+                <input type="text" name="amount" class="form-control" placeholder="Company Email"
                     value="{{ $data->amount }}">
                 @error('email')
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>

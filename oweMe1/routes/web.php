@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
@@ -25,20 +26,25 @@ Route::get('/dashboard', function () {
 
 //Route::get('/index', [BillController::class, 'index']);
 
-Route::resource('bills', BillController::class);
 
 
+Route::get('paymentlist',[PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('showpaymentlist');
+Route::get('addpayment',[PaymentController::class, 'addPayment'])->middleware(['auth', 'verified']);
+Route::post('savepayment',[PaymentController::class, 'savePayment'])->middleware(['auth', 'verified']);
+Route::get('editpayment/{id}',[PaymentController::class, 'editPayment'])->middleware(['auth', 'verified']);
+Route::post('updatepayment',[PaymentController::class, 'updatePayment'])->middleware(['auth', 'verified']);
+Route::get('deletepayment/{id}',[PaymentController::class, 'deletePayment'])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
 
-/**Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
+    Route::resource('bills', BillController::class);
 
-
-    Route::resource('welcome', Controller::class);
+    
 
     
     
     
-    }); */
+    }); 
     

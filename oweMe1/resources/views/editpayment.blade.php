@@ -5,7 +5,7 @@
                 @if(Session::has('success'))
                 <div class="alert"> {{Session::get('success')}}</div>
                 @endif
-                <h2>Rechnung bearbeiten</h2>
+                <h2 class="h2">Rechnung bearbeiten</h2>
                 <form method="POST" action="{{url('updatepayment')}}">
                     @csrf
                     <input type="hidden" name="id" value="{{$data->id}}">
@@ -15,6 +15,11 @@
                         @error('amount')
                         <div class="alert alert-danger"> {{$message}}</div>
                         @enderror
+
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label" > debtorName</label>
+                        <input type="text" class="form-control" name="debtorName" placeholder="Name" value="{{$data->debtorName}}">
 
                     </div>
                     <div class="md-3">

@@ -5,6 +5,7 @@ use App\Models\Payment;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -15,7 +16,8 @@ class PaymentController extends Controller
         return view('paymentlist', compact('data', 'debtdata'));
     }
     public function addPayment() {
-        return view('addpayment');
+        $users= DB::table('users')->get();
+        return view('addpayment', compact('users'));
     }
     public function savePayment(Request $request){
         $user = Auth::user();
@@ -24,13 +26,12 @@ class PaymentController extends Controller
         ]);
         $amount = $request-> amount;
         $message = $request-> message;
-        $debtorID = $request-> debtorID;
         $UserID = $user->id ;
         $debtorName = $request -> debtorName;
         $pay = new Payment();
         $pay -> amount = $amount;
         $pay -> message = $message;
-        $pay -> debtorID = $debtorID;
+        $pay -> debtorID = DB::table('users')-> where('name','=', $debtorName)->value('id');
         $pay -> UserID = $UserID;
         $pay -> debtorName = $debtorName;
         $pay-> save();
@@ -62,5 +63,27 @@ class PaymentController extends Controller
     public function deletePayment($id){
         Payment::where('id', '=', $id)->delete();
         return redirect() -> route('showpaymentlist')-> with ('success', 'Rechnung gelöscht');
+    }
+    public function search(Request $request){
+        $user = Auth::user();
+        $output='';
+        $searchOutput=Payment::where('debtorName','Like','%'.$request -> search.'%')->where('UserID', '=', $user->id)->get();
+        foreach($searchOutput as $searchOutput){
+            $output.= 
+           '<tr>
+            <td> '.$searchOutput->id.'</td>
+            <td> '.$searchOutput->UserID.'</td>
+            <td> '.$searchOutput->debtorID.'</td>
+            <td> '.$searchOutput->debtorName.'</td>
+            <td> '.$searchOutput->message.'</td>
+            <td> '.$searchOutput->amount. ' </td>
+            <td> '.' <a class="btn btn-primary" href="/editpayment/'.$searchOutput->id.'">Edit</a>
+            <a class="btn btn-danger" href="/deletepayment/'.$searchOutput->id.'"> Delete</a>
+             '.'
+            </td>
+            </tr> ';
+           
+        };
+        return response($output);
     }
 }

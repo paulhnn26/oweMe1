@@ -18,7 +18,12 @@
                     </div>
                     <div class="md-3">
                         <label class="form-label">debtorName</label>
-                        <input type="text" class="form-control" name="debtorName" placeholder="Wer soll zahlen Name">
+                        <select name="debtorName" >
+                            @foreach($users as $user)
+                            <option value="{{$user->name}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                        {{-- <input type="text" class="form-control" name="debtorName" placeholder="Wer soll zahlen Name"> --}}
                     </div>
                     <div class="md-3">
                         <label class="form-label" > message</label>

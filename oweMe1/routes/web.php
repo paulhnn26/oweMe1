@@ -34,6 +34,7 @@ Route::post('savepayment',[PaymentController::class, 'savePayment'])->middleware
 Route::get('editpayment/{id}',[PaymentController::class, 'editPayment'])->middleware(['auth', 'verified']);
 Route::post('updatepayment',[PaymentController::class, 'updatePayment'])->middleware(['auth', 'verified']);
 Route::get('deletepayment/{id}',[PaymentController::class, 'deletePayment'])->middleware(['auth', 'verified']);
+Route::get('/search',[PaymentController::class, 'search']);
 
 require __DIR__.'/auth.php';
 

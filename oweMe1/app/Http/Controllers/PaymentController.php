@@ -13,10 +13,12 @@ class PaymentController extends Controller
         $user = Auth::user();
         $data = Payment::where('UserID', '=', $user->id)->get();
         $debtdata = Payment::where('debtorName', '=', $user->name)->get();
-        return view('paymentlist', compact('data', 'debtdata'));
+        $users= DB::table('users')->get();
+        return view('paymentlist', compact('data', 'debtdata','users'));
     }
     public function addPayment() {
-        $users= DB::table('users')->get();
+        $currentUser = Auth::user();
+        $users=DB::table('users')->whereNot('id','=', $currentUser->id)->get();
         return view('addpayment', compact('users'));
     }
     public function savePayment(Request $request){
@@ -34,6 +36,7 @@ class PaymentController extends Controller
         $pay -> debtorID = DB::table('users')-> where('name','=', $debtorName)->value('id');
         $pay -> UserID = $UserID;
         $pay -> debtorName = $debtorName;
+        $pay -> userName = $user -> name;
         $pay-> save();
         return redirect() -> route('showpaymentlist')-> with ('success', 'Rechnung erstellt');
     }
@@ -71,12 +74,10 @@ class PaymentController extends Controller
         foreach($searchOutput as $searchOutput){
             $output.= 
            '<tr>
-            <td> '.$searchOutput->id.'</td>
-            <td> '.$searchOutput->UserID.'</td>
-            <td> '.$searchOutput->debtorID.'</td>
+            <td> '.$searchOutput->created_at.'</td>
             <td> '.$searchOutput->debtorName.'</td>
             <td> '.$searchOutput->message.'</td>
-            <td> '.$searchOutput->amount. ' </td>
+            <td> '.$searchOutput->amount.' €'. ' </td>
             <td> '.' <a class="btn btn-primary" href="/editpayment/'.$searchOutput->id.'">Edit</a>
             <a class="btn btn-danger" href="/deletepayment/'.$searchOutput->id.'"> Delete</a>
              '.'

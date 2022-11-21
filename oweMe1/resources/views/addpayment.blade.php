@@ -37,4 +37,5 @@
                     <button type="submit" class="btn btn-primary"> Erstellen</button>
                     <a href="{{url('paymentlist')}}" class="btn btn-danger"> Back</a>
                 </form>
+            </div>
 </x-app-layout>

@@ -2,27 +2,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="h2 m-2 p-2">Paymentliste</h2>
-                @if(Session::has('success'))
-                <div class="alert"> {{Session::get('success')}}</div>
-                @endif
-                <div class="container">
-                    <div class="search"> 
-                        <input type="search" name="search" id="search" placeholder="Suche" class="form-control">
-                    </div>
-                </div>
+                <h2 class="h1 m-2 p-2">Paymentliste</h2>
                 <div>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Session::has('success'))
-                                <div class="alert"> {{Session::get('success')}}</div>
-                                @endif
-                                <h2 class="h2">Neue Rechnung</h2>
+                                <h2 class="h2">Lege hier neue Rechnungen an</h2>
                                 <form method="POST" action="{{url('savepayment')}}" class="form-control">
                                     @csrf
                                     <div class="md-3">
-                                        <label class="form-label" > amount</label>
+                                        <label class="form-label" > Wie viel wird dir geschuldet</label>
                                         <input type="text" class="form-control" name="amount" placeholder="Betrag eingeben">
                                         @error('amount')
                                         <div class="alert alert-danger"> {{$message}}</div>
@@ -30,7 +19,7 @@
                 
                                     </div>
                                     <div class="md-3">
-                                        <label class="form-label">debtorName</label>
+                                        <label class="form-label">Wer schuldet dir Geld</label>
                                         <select name="debtorName" >
                                             @foreach($users as $user)
                                             <option value="{{$user->name}}">{{$user->name}}</option>
@@ -39,24 +28,32 @@
                                         {{-- <input type="text" class="form-control" name="debtorName" placeholder="Wer soll zahlen Name"> --}}
                                     </div>
                                     <div class="md-3">
-                                        <label class="form-label" > message</label>
-                                        <input type="text" class="form-control" name="message" placeholder="Nachricht">
-                
+                                        <label class="form-label" > Nachricht</label>
+                                        <input type="text" class="form-control" name="message" placeholder="Nachricht">               
                                     </div>
                                     <button type="submit" class="btn btn-primary"> Erstellen</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-primary m-2 p-2" href="{{url('addpayment')}}">Neue Rechnung</a>
+                    {{-- <a class="btn btn-primary m-2 p-2" href="{{url('addpayment')}}">Neue Rechnung</a> --}}
                 </div>
-                	<table class="table table-striped table-dark"> 
+                <div class="container pt-2 mt-4 mb-4">
+                    @if(Session::has('success'))
+                    <div class="alert alert-success"> {{Session::get('success')}}</div>
+                    @endif
+                    <div class="search"> 
+                        <h3 class="h3">Suche nach Rechnungen</h3>
+                        <input type="search" name="search" id="search" placeholder="Suche" class="form-control">
+                    </div>
+                </div>
+                	<table class="table table-striped table-bordered table-hover"> 
                         <thead>
                             <tr>   
                                 <th>Erstellt</th>                           
-                                <th>debtorName </th>
-                                <th>message </th>
-                                <th>amount </th>
+                                <th>Wer schuldet dir </th>
+                                <th>Nachricht </th>
+                                <th>Betrag </th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -89,8 +86,8 @@
                 <tr>
                     <th>Erstellt </th>
                     <th>Du schuldest </th>
-                    <th>message </th>
-                    <th>amount </th>
+                    <th>Nachricht </th>
+                    <th>Betrag </th>
                     <th>Actions</th>
                 </tr>
             </thead>

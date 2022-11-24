@@ -14,7 +14,6 @@
                         @error('amount')
                         <div class="alert alert-danger"> {{$message}}</div>
                         @enderror
-
                     </div>
                     <div class="md-3">
                         <label class="form-label">debtorName</label>
@@ -38,4 +37,6 @@
                     <a href="{{url('paymentlist')}}" class="btn btn-danger"> Back</a>
                 </form>
             </div>
+        </div>
+    </div>
 </x-app-layout>

@@ -10,7 +10,7 @@
                     @csrf
                     <input type="hidden" name="id" value="{{$data->id}}">
                     <div class="md-3">
-                        <label class="form-label" > amount</label>
+                        <label class="form-label">Betrag</label>
                         <input type="text" class="form-control" name="amount" placeholder="Betrag eingeben" value="{{$data->amount}}">
                         @error('amount')
                         <div class="alert alert-danger"> {{$message}}</div>
@@ -18,18 +18,19 @@
 
                     </div>
                     <div class="md-3">
-                        <label class="form-label" > debtorName</label>
+                        <label class="form-label" >Wer schuldet dir Geld</label>
                         <input type="text" class="form-control" name="debtorName" placeholder="Name" value="{{$data->debtorName}}">
+                        @error('debtorName')
+                        <div class="alert alert-danger"> {{$message}}</div>
+                        @enderror
 
                     </div>
                     <div class="md-3">
-                        <label class="form-label" > message</label>
+                        <label class="form-label" >Nachricht</label>
                         <input type="text" class="form-control" name="message" placeholder="Nachricht" value="{{$data->message}}">
-
-                    </div>
-                    <div class="md-3">
-                        <label class="form-label" > debtorID</label>
-                        <input type="text" class="form-control" name="debtorID" placeholder="Wer soll zahlen" value="{{$data->debtorID}}">
+                        @error('message')
+                        <div class="alert alert-danger"> {{$message}}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Updaten</button>
                     <a href="{{url('paymentlist')}}" class="btn btn-danger"> Back</a>

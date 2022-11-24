@@ -13,7 +13,7 @@ class PaymentController extends Controller
         $user = Auth::user();
         $data = Payment::where('UserID', '=', $user->id)->get();
         $debtdata = Payment::where('debtorName', '=', $user->name)->get();
-        $users= DB::table('users')->get();
+        $users= DB::table('users')->whereNot('id','=', $user->id)->get();
         return view('paymentlist', compact('data', 'debtdata','users'));
     }
     public function addPayment() {
@@ -24,7 +24,9 @@ class PaymentController extends Controller
     public function savePayment(Request $request){
         $user = Auth::user();
         $request -> validate([
-            'amount' => 'required'
+            'amount' => 'required',
+            'debtorName' => 'required',
+            'message' => 'required'
         ]);
         $amount = $request-> amount;
         $message = $request-> message;
@@ -47,17 +49,17 @@ class PaymentController extends Controller
     public function updatePayment(Request $request){
         
         $request -> validate([
-            'amount' => 'required'
+            'amount' => 'required',
+            'debtorName' => 'required',
+            'message' => 'required'
         ]);
         $id = $request-> id;
         $amount = $request-> amount;
         $message = $request-> message;
-        $debtorID = $request-> debtorID;
         $debtorName = $request -> debtorName;
         Payment::where('id', '=', $id)->update([
             'amount' => $amount,
             'message' => $message,
-            'debtorID' => $debtorID,
             'debtorName' => $debtorName,
             
         ]);

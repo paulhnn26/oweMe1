@@ -19,7 +19,13 @@
                     </div>
                     <div class="md-3">
                         <label class="form-label" >Wer schuldet dir Geld</label>
-                        <input type="text" class="form-control" name="debtorName" placeholder="Name" value="{{$data->debtorName}}">
+                        {{-- <input type="text" class="form-control" name="debtorName" placeholder="Name" value="{{$data->debtorName}}"> --}}
+                        <select name="debtorName">
+                            <option selected hidden value="{{$data->debtorName}}">{{$data->debtorName}}</option>
+                            @foreach($users as $user)
+                            <option value="{{$user->name}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
                         @error('debtorName')
                         <div class="alert alert-danger"> {{$message}}</div>
                         @enderror
@@ -34,5 +40,8 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Updaten</button>
                     <a href="{{url('paymentlist')}}" class="btn btn-danger"> Back</a>
-                </form>
+                </form>      
+            </div>
+        </div>
+    </div>
 </x-app-layout>

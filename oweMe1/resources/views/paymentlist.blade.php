@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="h1 m-2 p-2">Paymentliste</h2>
+                <h2 class="h1 m-2 p-2">Rechnungen</h2>
                 <div>
                     <div class="container">
                         <div class="row">
@@ -11,27 +11,33 @@
                                 <form method="POST" action="{{url('savepayment')}}" class="form-control">
                                     @csrf
                                     <div class="md-3">
-                                        <label class="form-label" > Wie viel wird dir geschuldet</label>
+                                        <label class="form-label" >Wie viel wird dir geschuldet</label>
                                         <input type="text" class="form-control" name="amount" placeholder="Betrag eingeben">
                                         @error('amount')
                                         <div class="alert alert-danger"> {{$message}}</div>
                                         @enderror
                 
                                     </div>
-                                    <div class="md-3">
+                                    <div class="md-3 mt-2">
                                         <label class="form-label">Wer schuldet dir Geld</label>
                                         <select name="debtorName" >
                                             @foreach($users as $user)
                                             <option value="{{$user->name}}">{{$user->name}}</option>
                                             @endforeach
                                         </select>
+                                        @error('debtorName')
+                                        <div class="alert alert-danger"> {{$message}}</div>
+                                        @enderror
                                         {{-- <input type="text" class="form-control" name="debtorName" placeholder="Wer soll zahlen Name"> --}}
                                     </div>
                                     <div class="md-3">
-                                        <label class="form-label" > Nachricht</label>
-                                        <input type="text" class="form-control" name="message" placeholder="Nachricht">               
+                                        <label class="form-label" >Nachricht</label>
+                                        <input type="text" class="form-control" name="message" placeholder="Nachricht">  
+                                        @error('message')
+                                        <div class="alert alert-danger"> {{$message}}</div>
+                                        @enderror             
                                     </div>
-                                    <button type="submit" class="btn btn-primary"> Erstellen</button>
+                                    <button type="submit" class="btn btn-primary bg-primary mt-2">Erstellen</button>
                                 </form>
                             </div>
                         </div>
@@ -65,8 +71,8 @@
                                 <td>{{$payment->message}}</td>
                                 <td>{{$payment->amount}} €</td>                              
                                 <td>
-                                    <a class="btn btn-primary" href="{{url('editpayment/'.$payment->id)}}">Edit</a>
-                                    <a class="btn btn-danger" href="{{url('deletepayment/'.$payment->id)}}"> Delete</a>
+                                    <a class="btn btn-primary" href="{{url('editpayment/'.$payment->id)}}">Bearbeiten</a>
+                                    <a class="btn btn-danger" href="{{url('deletepayment/'.$payment->id)}}">Löschen</a>
                                    </td>
                             </tr>
                             @endforeach
@@ -99,7 +105,7 @@
                     <td>{{$payment->message}}</td>
                     <td>{{$payment->amount}} €</td>
                     <td>
-                        <a class="btn btn-danger" href="{{url('deletepayment/'.$payment->id)}}"> Ich habe bezahlt</a>
+                        <a class="btn btn-success" href="{{url('deletepayment/'.$payment->id)}}">Ich habe bezahlt</a>
                        </td>
                 </tr>
                 @endforeach
@@ -119,7 +125,6 @@
             url: '{{URL::to('search')}}', 
             data:{'search':$value},
             success:function(data){
-                console.log(data);
                 $('#Content').html(data);
             }
         });

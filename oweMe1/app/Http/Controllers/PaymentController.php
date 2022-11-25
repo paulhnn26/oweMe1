@@ -16,11 +16,11 @@ class PaymentController extends Controller
         $users= DB::table('users')->whereNot('id','=', $user->id)->get();
         return view('paymentlist', compact('data', 'debtdata','users'));
     }
-    public function addPayment() {
-        $currentUser = Auth::user();
-        $users=DB::table('users')->whereNot('id','=', $currentUser->id)->get();
-        return view('addpayment', compact('users'));
-    }
+    // public function addPayment() {
+    //     $currentUser = Auth::user();
+    //     $users=DB::table('users')->whereNot('id','=', $currentUser->id)->get();
+    //     return view('addpayment', compact('users'));
+    // }
     public function savePayment(Request $request){
         $user = Auth::user();
         $request -> validate([
@@ -43,8 +43,10 @@ class PaymentController extends Controller
         return redirect() -> route('showpaymentlist')-> with ('success', 'Rechnung erstellt');
     }
     public function editPayment($id){
+        $user = Auth::user();
+        $users= DB::table('users')->whereNot('id','=', $user->id)->whereNot('id','=', $id)->get();
         $data= Payment::where('id', '=', $id)-> first();
-        return view('editpayment', compact('data'));
+        return view('editpayment', compact('data', 'users'));
     }
     public function updatePayment(Request $request){
         
@@ -80,8 +82,8 @@ class PaymentController extends Controller
             <td> '.$searchOutput->debtorName.'</td>
             <td> '.$searchOutput->message.'</td>
             <td> '.$searchOutput->amount.' €'. ' </td>
-            <td> '.' <a class="btn btn-primary" href="/editpayment/'.$searchOutput->id.'">Edit</a>
-            <a class="btn btn-danger" href="/deletepayment/'.$searchOutput->id.'"> Delete</a>
+            <td> '.' <a class="btn btn-primary" href="/editpayment/'.$searchOutput->id.'">Bearbeiten</a>
+            <a class="btn btn-danger" href="/deletepayment/'.$searchOutput->id.'"> Löschen</a>
              '.'
             </td>
             </tr> ';
